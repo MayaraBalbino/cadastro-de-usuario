@@ -17,7 +17,7 @@ function App() {
   const [formData, setFormData] = useState({
     nome: "",
     email: "",
-    salario: 0,
+    cargo: "",
     cpf: "",
   });
 
@@ -79,7 +79,7 @@ function App() {
         setFormData({
           nome: "", 
           email: "",
-          salario: '',
+          cargo: '',
           cpf: "",
         })
       }else if(response.status === 400){
@@ -109,9 +109,9 @@ function App() {
 
   return (
     <div className="flex align-items-center justify-content-center min-h-screen surface-ground p-4">
-    <Card className="p-5 w-40rem">
-      <div className='m-5 justify-center'>
-        <span class="m-b-5 text-4xl title-text">Cadastro de Usuário</span>
+    <Card className="p-6 w-40rem">
+      <div className='p-2 justify-center text-4xl'>
+        Cadastro de Funcionários
       </div>
 
       <form onSubmit={handleSubmit} className="flex flex-column gap-3">
@@ -139,16 +139,13 @@ function App() {
         </div>
 
         <div className="flex flex-column">
-          <label>Salário:</label>
-          <InputNumber
-            name="salario"
-            value={formData.salario}
-            onChange={(e) => setFormData({ ...formData, salario: e.value})}
-            mode="decimal"
-            minFractionDigits={2}
-            maxFractionDigits={2}
+          <label>Cargo:</label>
+          <InputText
+            name="cargo"
+            value={formData.cargo}
+            onChange={handleChange}
             required
-            className="p-inputnumber-lg"
+            className="p-inputtext-lg"
           />
 
           <div className='flex flex-column'>

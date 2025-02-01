@@ -3,7 +3,7 @@ import { errorMessages } from '../error/httpErros.js';
 import { sucessMessages } from '../error/httpErros.js';
 
 export const createUser = async (req, res) => {
-    const { nome, email, salario, cpf } = req.body;
+    const { nome, email, cargo, cpf } = req.body;
 
     if (cpf.length !== 11) {
         return res.status(400).json({
@@ -23,8 +23,8 @@ export const createUser = async (req, res) => {
         }
 
         const [results] = await dbConnection.query(
-            'INSERT INTO users (nome, email, salario, cpf) VALUES (?, ?, ?, ?)',
-            [nome, email, salario, cpf]
+            'INSERT INTO users (nome, email, cargo, cpf) VALUES (?, ?, ?, ?)',
+            [nome, email, cargo, cpf]
         );
 
         res.status(sucessMessages.created.status).json({
@@ -33,7 +33,7 @@ export const createUser = async (req, res) => {
                 id: results.insertId,
                 nome,
                 email,
-                salario,
+                cargo,
                 cpf,
             },
         });

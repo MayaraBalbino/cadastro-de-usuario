@@ -22,7 +22,7 @@ export const findOne = async (req, res) => {
                 id,
                 nome,
                 email,
-                salario,
+                cargo,
                 cpf,
             },
         });

@@ -13,7 +13,7 @@ export const deleteUser = async (req, res) => {
     } catch (error) {
         console.error('erro', error);
         res.status(errorMessages.internalServerError.status).json({
-            message: errorMessages.internalServerError.massage,
+            message: errorMessages.internalServerError.message,
         });
     }
 };

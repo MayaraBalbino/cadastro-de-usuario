@@ -7,8 +7,8 @@ export const updateUser = async (req, res) => {
     const { id } = req.params;
     try {
         const [results] = await dbConnection.query(
-            'UPDATE users SET nome=?, email = ?, salario = ?, cpf = ?  WHERE id = ?',
-            [nome, email, salario, cpf, id]
+            'UPDATE users SET nome=?, email = ?, cargo = ?, cpf = ?  WHERE id = ?',
+            [nome, email, cargo, cpf, id]
         );
         res.status(sucessMessages.updated.status).json({
             message: sucessMessages.updated.message,
@@ -16,7 +16,7 @@ export const updateUser = async (req, res) => {
                 id,
                 nome,
                 email,
-                salario,
+                cargo,
                 cpf,
             },
         });
