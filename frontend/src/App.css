@@ -1,0 +1,28 @@
+h1{
+  color: antiquewhite;
+}
+
+.icone-roxo{
+  color: blueviolet;
+}
+
+.title-text{
+  
+  padding: 10px;
+  
+  
+}
+
+.p-card-content{
+  padding: 50px;
+  width: 30rem;
+  height: 35rem;
+}
+
+body{
+  background-color: blueviolet;
+}
+
+#root{
+  background-color: blueviolet;
+}
