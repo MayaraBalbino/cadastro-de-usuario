@@ -17,10 +17,12 @@ function App() {
   const [formData, setFormData] = useState({
     nome: "",
     email: "",
-    cargo: "",
     cpf: "",
+    senha: "",
+    confirmarSenha: "",
   });
 
+  const [erroSenha, setErroSenha] = useState("");
 
   const validateCPF = (cpf) => {
     const regex = /^\d{11}$/;
@@ -35,8 +37,22 @@ function App() {
 
     setFormData({...formData, [name]: value});
     
+    if (name === "confirmarSenha") {
+      setErroSenha(value !== formData.senha ? "As senhas não coincidem!" : "");
+    }
     
   }
+
+  
+
+  const handleConfirmarSenhaChange = (e) => {
+    setConfirmarSenha(e.target.value);
+    if (senha !== e.target.value) {
+        setErroSenha("As senhas não coincidem!");
+    } else {
+        setErroSenha("");
+    }
+};
   
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -69,6 +85,7 @@ function App() {
       })
 
       if(response.ok){
+        
         toast.current.show({
           severity: "success",
           summary: "Sucesso",
@@ -77,19 +94,27 @@ function App() {
         })
 
         setFormData({
-          nome: "", 
+          nome: "",
           email: "",
-          cargo: '',
           cpf: "",
+          senha: "",
+          confirmarSenha: "",
         })
-      }else if(response.status === 400){
+
+      }else if(response.status === 409){
         toast.current.show({
           severity: "error",
           summary: "Erro",
           detail: "Este CPF já está cadastrado",
           life: 3000,
-        })
-      }else{
+        })}else if(response.status === 400){
+          toast.current.show({
+            severity: "error",
+            summary: "Erro",
+            detail: "As senhas não coincidem",
+            life: 3000,
+          })
+        }else{
         throw new Error('Erro ao cadastrar usuário')
       }
 
@@ -111,7 +136,7 @@ function App() {
     <div className="flex align-items-center justify-content-center min-h-screen surface-ground p-4">
     <Card className="p-6 w-40rem">
       <div className='p-2 justify-center text-4xl'>
-        Cadastro de Funcionários
+        Cadastro
       </div>
 
       <form onSubmit={handleSubmit} className="flex flex-column gap-3">
@@ -138,17 +163,7 @@ function App() {
           />
         </div>
 
-        <div className="flex flex-column">
-          <label>Cargo:</label>
-          <InputText
-            name="cargo"
-            value={formData.cargo}
-            onChange={handleChange}
-            required
-            className="p-inputtext-lg"
-          />
-
-          <div className='flex flex-column'>
+        <div className='flex flex-column'>
             <label>CPF:</label>
             <InputText
             name="cpf"
@@ -158,21 +173,39 @@ function App() {
             />
 
           </div>
+
+        <div className="flex flex-column">
+          <label>Senha:</label>
+          <InputText
+            name="senha"
+            value={formData.senha}
+            onChange={handleChange}
+            required
+            className="p-inputtext-lg"
+          />         
+        </div>
+
+        <div className="flex flex-column">
+          <label>Confirmar senha:</label>
+          <InputText
+            name="confirmarSenha"
+            type="password"
+            value={formData.confirmarSenha}
+            onChange={handleChange}
+            required
+            className="p-inputtext-lg"
+          />         
         </div>
 
         <div className='flex justify-content-center m-2'>
         <Button type="submit" label="Cadastrar" icon="pi pi-check" className="p-button-primary" />
       </div>
 
-      </form>
-
-      
-      
+      </form>     
     </Card>
     <Toast ref={toast} />
     </div>
   );
 }
-
 
 export default App
